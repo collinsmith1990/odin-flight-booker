@@ -1,25 +1,25 @@
 <%= form_tag(flights_path, method: "get") do %>
   <%= label_tag(:from_airport_id, "From") %>
-  <%= select_tag(:from_airport_id, options_for_select(@airport_options)) %>
+  <%= select_tag(:from_airport_id, options_for_select(@airport_options, @selected_from_airport)) %>
 
   <%= label_tag(:to_airport_id, "To") %>
-  <%= select_tag(:to_airport_id, options_for_select(@airport_options)) %>
+  <%= select_tag(:to_airport_id, options_for_select(@airport_options, @selected_to_airport)) %>
 
   <%= label_tag(:passengers, "Passengers") %>
-  <%= select_tag(:passengers, options_for_select(@passenger_options)) %>
+  <%= select_tag(:passengers, options_for_select(@passenger_options, @selected_passengers)) %>
 
   <%= label_tag(:date, "To") %>
-  <%= select_tag(:date, options_for_select(@date_options)) %>
+  <%= select_tag(:date, options_for_select(@date_options, @selected_date)) %>
 
   <%= submit_tag("Search") %>
 <% end %>
 
 <% if @flights %>
-  <% @flights.each do |flight| %>
-    <ul>
-      <li><%= flight.from_airport.airport_code %></li>
-      <li><%= flight.to_airport.airport_code %></li>
-      <li><%= flight.start_time %></li>
-    </ul>
+  <%= form_tag(new_booking_path, method: "get") do %>
+    <% @flights.each do |flight| %>
+      <%= radio_button_tag(:flight, flight) %>
+      <%= label_tag(:flight, "#{flight.start_time}") %>
+    <% end %>
+    <%= submit_tag("Confirm") %>
   <% end %>
 <% end %>
