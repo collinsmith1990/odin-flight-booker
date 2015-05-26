@@ -17,9 +17,10 @@
 <% if @flights %>
   <%= form_tag(new_booking_path, method: "get") do %>
     <% @flights.each do |flight| %>
-      <%= radio_button_tag(:flight, flight) %>
-      <%= label_tag(:flight, "#{flight.start_time}") %>
+      <%= radio_button_tag(:flight_id, flight.id) %>
+      <%= label_tag(:flight_id, "#{flight.start_time}") %>
     <% end %>
+    <%= hidden_field_tag(:passengers, @selected_passengers) %>
     <%= submit_tag("Confirm") %>
   <% end %>
 <% end %>
